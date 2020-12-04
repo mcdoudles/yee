@@ -28,5 +28,8 @@ public class AOC3 {
 		System.out.print("task1 = " + task2(str, 3, 1));
 		System.out.print("\ntask2 = "
 				+ task2(str, 1, 1) * task2(str, 3, 1) * task2(str, 5, 1) * task2(str, 7, 1) * task2(str, 1, 2));
+		System.out.print("\nindividual = " + task2(str, 1, 1) + " " + task2(str, 3, 1) + " " + task2(str, 5, 1) + " "
+				+ task2(str, 7, 1) + " " + task2(str, 1, 2));
+
 	}
 }
