@@ -18,9 +18,6 @@ public class AOC4 {
 		for (int i = 0; i < str.size(); i++) {
 			result++;
 			String[] arrayOfEntries = str.get(i).split(" ");
-			for(int j=0;j<arrayOfEntries.length;j++) {
-				System.out.print(i + ": "+arrayOfEntries[j]+"\n");
-			}
 			loopA: for (int j = 1; j < arrayOfEntries.length; j++) {
 				String switcher = arrayOfEntries[j].substring(0, 3);
 				switch (switcher) {
