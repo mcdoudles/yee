@@ -3,6 +3,7 @@ package testing;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 
 public class AOC11 {
@@ -166,76 +167,34 @@ public class AOC11 {
 		int result = 0;
 		int oldResult = 0;
 		int distance = 1;
-		boolean isItHashtag = false;
-		if (charArray[posX][posY] == '#')
-			isItHashtag = true;
-		while (distance < charArray[0].length) {
-			if (posX - distance >= 0 && posY - distance >= 0) {
-				if (charArray[posX - distance][posY - distance] == 'L' && isItHashtag) {
-					return oldResult;
+		HashMap<KeyForAOC11, Boolean> found = new HashMap<KeyForAOC11, Boolean>();
+		int dirX = -1;
+		int dirY = -1;
+		while (!(found.containsValue(false))) {
+			while (dirX < 2) {
+				while (dirY < 2) {
+					if (posX + (distance * dirX) >= 0 && posY + (distance * dirY) >= 0
+							&& posX + (distance * dirX) < charArray.length
+							&& posY + (distance * dirY) < charArray[0].length && (dirX != 0 || dirY != 0)) {
+						if (charArray[posX + (distance * dirX)][posY + (distance * dirY)] == 'L') {
+							found.put(new KeyForAOC11(dirX, dirY), true);
+						} else if (charArray[posX + (distance * dirX)][posY + (distance * dirY)] == '#') {
+							result++;
+							found.put(new KeyForAOC11(dirX, dirY), true);
+						} else {
+							found.put(new KeyForAOC11(dirX, dirY), false);
+							distance++;
+						}
+					}
+					dirY++;
 				}
-				if (charArray[posX - distance][posY - distance] == '#') {
-					result++;
-				}
+				dirY = -1;
+				dirX++;
 			}
-			if (posY - distance >= 0) {
-				if (charArray[posX][posY - distance] == 'L' && isItHashtag) {
-					return oldResult;
-				}
-				if (charArray[posX][posY - distance] == '#') {
-					result++;
-				}
-			}
-			if (posX - distance >= 0) {
-				if (charArray[posX - distance][posY] == 'L' && isItHashtag) {
-					return oldResult;
-				}
-				if (charArray[posX - distance][posY] == '#') {
-					result++;
-				}
-			}
-			if (posX + distance < charArray.length && posY + distance < charArray[0].length) {
-				if (charArray[posX + distance][posY + distance] == 'L' && isItHashtag) {
-					return oldResult;
-				}
-				if (charArray[posX + distance][posY + distance] == '#') {
-					result++;
-				}
-			}
-			if (posX + distance < charArray.length && posY - distance >= 0) {
-				if (charArray[posX + distance][posY - distance] == 'L' && isItHashtag) {
-					return oldResult;
-				}
-				if (charArray[posX + distance][posY - distance] == '#') {
-					result++;
-				}
-			}
-			if (posX - distance >= 0 && posY + distance < charArray[0].length) {
-				if (charArray[posX - distance][posY + distance] == 'L' && isItHashtag) {
-					return oldResult;
-				}
-				if (charArray[posX - distance][posY + distance] == '#') {
-					result++;
-				}
-			}
-			if (posX + distance < charArray.length) {
-				if (charArray[posX + distance][posY] == 'L' && isItHashtag) {
-					return oldResult;
-				}
-				if (charArray[posX + distance][posY] == '#') {
-					result++;
-				}
-			}
-			if (posY + distance < charArray[0].length) {
-				if (charArray[posX][posY + distance] == 'L' && isItHashtag) {
-					return oldResult;
-				}
-				if (charArray[posX][posY + distance] == '#') {
-					result++;
-				}
+			if (!(found.containsValue(false))) {
+				return oldResult;
 			}
 			oldResult = result;
-			distance++;
 		}
 		return result;
 	}
